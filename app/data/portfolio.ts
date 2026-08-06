@@ -38,7 +38,7 @@ export type Award = {
 export const profile = {
   name: "Adrian Nathanael Setiawan",
   eyebrow: "Software Engineer · Backend & Distributed Systems",
-  bio: "I’m Adrian, a software engineer focused on backend systems and distributed infrastructure. I enjoy turning complex workflows into dependable, maintainable software.",
+  bio: "I’m Adrian, a Universitas Indonesia student and  software engineer focused on backend systems and distributed infrastructure. I enjoy turning complex workflows into dependable, maintainable software.",
   portraitImage: undefined as string | undefined,
   contact: {
     linkedin: "https://www.linkedin.com/in/adrian-nathanael-setiawan-809761246/",
