@@ -1,22 +1,33 @@
-FROM node:24-alpine AS development-dependencies-env
-COPY . /app
+FROM oven/bun:1.3.14-alpine AS dependencies
 WORKDIR /app
-RUN npm ci
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 
-FROM node:24-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
+FROM dependencies AS build
+COPY . ./
+RUN bun run build
 
-FROM node:24-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
+FROM oven/bun:1.3.14-alpine AS production-dependencies
 WORKDIR /app
-RUN npm run build
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile --production
 
-FROM node:24-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
+FROM node:24-alpine AS runtime
 WORKDIR /app
-CMD ["npm", "run", "start"]
+ENV NODE_ENV=production
+ENV PORT=3000
+
+COPY package.json ./
+COPY --from=production-dependencies /app/node_modules ./node_modules
+COPY --from=build /app/build ./build
+COPY --from=build /app/public ./public
+COPY --from=build /app/server.mjs ./server.mjs
+
+RUN mkdir -p /app/.data && chown -R node:node /app
+USER node
+
+EXPOSE 3000
+VOLUME ["/app/.data"]
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD wget --spider --quiet http://127.0.0.1:3000/ || exit 1
+
+CMD ["node", "server.mjs"]

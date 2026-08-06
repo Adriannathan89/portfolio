@@ -1,0 +1,19 @@
+services:
+  portfolio-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio-web
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      METRICS_USERNAME: ${METRICS_USERNAME}
+      METRICS_PASSWORD: ${METRICS_PASSWORD}
+    volumes:
+      - portfolio-metrics:/app/.data
+
+volumes:
+  portfolio-metrics:
