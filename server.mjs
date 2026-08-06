@@ -1,4 +1,4 @@
-import { createHash, randomUUID, timingSafeEqual } from "node:crypto";
+import { createHash, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -116,6 +116,7 @@ function requireMetricsAuth(request, response, next) {
 }
 
 app.disable("x-powered-by");
+app.set("trust proxy", "loopback");
 app.use("/assets", express.static(path.join(rootDirectory, build.assetsBuildDirectory, "assets"), {
   immutable: true,
   maxAge: "1y",
@@ -147,6 +148,11 @@ app.use((request, response, next) => {
   }
 
   recordVisit(visitorId);
+  next();
+});
+
+app.use((_request, _response, next) => {
+  _request.headers["x-csp-nonce"] = randomBytes(18).toString("base64");
   next();
 });
 

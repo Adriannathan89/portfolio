@@ -6,12 +6,21 @@ services:
     container_name: portfolio-web
     restart: unless-stopped
     ports:
-      - "${PORT:-3000}:3000"
+      - "127.0.0.1:${PORT:-8234}:3000"
     environment:
       NODE_ENV: production
       PORT: 3000
       METRICS_USERNAME: ${METRICS_USERNAME}
       METRICS_PASSWORD: ${METRICS_PASSWORD}
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 100
+    mem_limit: 256m
     volumes:
       - portfolio-metrics:/app/.data
 
