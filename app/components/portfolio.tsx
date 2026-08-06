@@ -10,6 +10,7 @@ type IconName =
   | "close"
   | "message"
   | "external"
+  | "download"
   | "spark";
 
 export function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
@@ -22,6 +23,7 @@ export function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
     close: <><path d="m6 6 12 12M18 6 6 18" /></>,
     message: <path d="M20 11.3a7.7 7.7 0 0 1-9.2 7.55L5 20l1.28-4.33A7.7 7.7 0 1 1 20 11.3Z" />,
     external: <><path d="M14 5h5v5M19 5l-8.5 8.5" /><path d="M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" /></>,
+    download: <><path d="M12 4v10M8 11l4 4 4-4" /><path d="M5 19h14" /></>,
     spark: <path d="m12 2 1.8 7.2L21 11l-7.2 1.8L12 20l-1.8-7.2L3 11l7.2-1.8L12 2Z" />,
   };
 

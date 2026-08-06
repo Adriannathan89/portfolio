@@ -72,7 +72,7 @@ function HeroSection() {
         <h1>Adrian <em>Nathanael</em> <span>Setiawan</span></h1>
         <p className="hero-bio">{profile.bio}</p>
         <div className="hero-actions">
-          <a className="button button--primary" href="#projects">Explore My Work <Icon name="arrow" /></a>
+          <a className="button button--primary" href={profile.cv} target="_blank" rel="noreferrer noopener">Download CV <Icon name="download" /></a>
           <a className="button button--ghost" href="#contact">Contact Me</a>
         </div>
       </div>

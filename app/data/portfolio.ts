@@ -40,6 +40,7 @@ export const profile = {
   eyebrow: "Software Engineer · Backend & Distributed Systems",
   bio: "I’m Adrian, a Universitas Indonesia student and  software engineer focused on backend systems and distributed infrastructure. I enjoy turning complex workflows into dependable, maintainable software.",
   portraitImage: undefined as string | undefined,
+  cv: "https://docs.google.com/document/d/1XRCSButju5pjzLNOFQvr3--FpYzvyrPpDeFjMewoXNo/edit?usp=sharing",
   contact: {
     linkedin: "https://www.linkedin.com/in/adrian-nathanael-setiawan-809761246/",
     whatsapp: "https://wa.me/+6285156628417",
@@ -70,6 +71,10 @@ export const projects: Project[] = [
     ],
     stack: ["TypeScript", "NestJS", "Redis", "RxJS", "Jest", "pnpm"],
     repositories: [
+      {
+        label: "Production",
+        url: "https://www.npmjs.com/package/@anthn/nestjs-cacheable",
+      },
       {
         label: "View Repository",
         url: "https://github.com/Adriannathan89/nestjs-cacheable",
