@@ -9,6 +9,7 @@ import {
   SectionHeading,
 } from "../components/portfolio";
 import { ScrollEffects } from "../components/scroll-effects";
+import { VisitTracker } from "../components/visit-tracker";
 import {
   awards,
   experiences,
@@ -100,6 +101,7 @@ export default function Home() {
   return (
     <main>
       <ScrollEffects />
+      <VisitTracker />
       <Header />
       <HeroSection />
       <section id="projects" className="projects-section section-shell">

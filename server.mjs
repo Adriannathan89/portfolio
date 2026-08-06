@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
 import { createRequestHandler } from "@react-router/express";
+import { isbot } from "isbot";
 
 const rootDirectory = path.dirname(fileURLToPath(import.meta.url));
 const metricsDirectory = path.join(rootDirectory, ".data");
@@ -73,6 +74,22 @@ function metricSummary() {
   };
 }
 
+const browserUserAgent = /\b(?:Chrome|CriOS|Firefox|FxiOS|Safari|Edg|EdgiOS|OPR|SamsungBrowser)\b/i;
+
+function isHumanBrowserRequest(request) {
+  const userAgent = request.get("user-agent") ?? "";
+  const origin = request.get("origin");
+
+  if (!userAgent || isbot(userAgent) || !browserUserAgent.test(userAgent)) return false;
+  if (!origin) return false;
+
+  try {
+    return new URL(origin).host === request.get("host");
+  } catch {
+    return false;
+  }
+}
+
 const build = await import("./build/server/index.js");
 const app = express();
 const port = Number(process.env.PORT ?? 3000);
@@ -131,10 +148,11 @@ app.get("/api/metrics", (_request, response) => {
   response.json(metricSummary());
 });
 
-app.use((request, response, next) => {
-  const acceptsHtml = request.accepts(["html"]);
-  const isTrackablePage = request.method === "GET" && acceptsHtml === "html" && request.path !== "/metric";
-  if (!isTrackablePage) return next();
+app.post("/api/visit", (request, response) => {
+  if (!isHumanBrowserRequest(request)) {
+    response.status(204).end();
+    return;
+  }
 
   let visitorId = getCookie(request, "portfolio_visitor");
   if (!visitorId) {
@@ -148,7 +166,7 @@ app.use((request, response, next) => {
   }
 
   recordVisit(visitorId);
-  next();
+  response.status(204).end();
 });
 
 app.use((_request, _response, next) => {
