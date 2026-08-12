@@ -10,7 +10,7 @@ import {
 } from "../components/portfolio";
 import { ScrollEffects } from "../components/scroll-effects";
 import { VisitTracker } from "../components/visit-tracker";
-import { UTestProjectCard } from "../modules/utest/UTestProjectCard";
+import { ReTTPProjectCard } from "../modules/ReTTP/ReTTPProjectCard";
 import {
   awards,
   experiences,
@@ -107,7 +107,7 @@ export default function Home() {
       <HeroSection />
       <section id="projects" className="projects-section section-shell">
         <SectionHeading eyebrow="SELECTED PROJECTS" title="Selected Projects"> </SectionHeading>
-        <div className="projects-grid">{projects.map((project, index) => <ProjectCard project={project} index={index} key={project.name} />)}<UTestProjectCard /></div>
+        <div className="projects-grid">{projects.map((project, index) => <ProjectCard project={project} index={index} key={project.name} />)}<ReTTPProjectCard /></div>
       </section>
       <section id="experience" className="experience-section section-shell">
         <SectionHeading eyebrow="IN THE FIELD" title="Organizations & Experience"> </SectionHeading>
