@@ -8,13 +8,13 @@ export function ReTTPProjectCard() {
         <span className="project-category">Open-source HTTP verification CLI</span>
       </div>
       <div className="rettp-project-visual" aria-hidden="true">
-        <div className="rettp-project-terminal"><span>$</span> rettp run preprod.utest <i>✓</i></div>
+        <div className="rettp-project-terminal"><span>$</span> rettp run preprod.rttp <i>✓</i></div>
         <div className="rettp-project-flow"><b>check</b><em>→</em><b>request</b><em>→</em><b>assert</b><em>→</em><b>report</b></div>
         <div className="rettp-project-stats"><span><b>7</b> HTTP methods</span><span><b>3</b> report formats</span><span><b>130</b> Ctrl+C exit</span></div>
       </div>
       <div className="project-card__copy">
         <h3>ReTTP</h3>
-        <p>A Rust-powered command-line HTTP verification runner for post-deployment and pre-production release gates. It turns a readable <code>.utest</code> suite into repeatable API checks, typed response assertions, and CI-ready evidence—without coupling verification to an application framework.</p>
+        <p>A Rust-powered command-line HTTP verification runner for post-deployment and pre-production release gates. It turns a readable <code>.rttp</code> suite into repeatable API checks, typed response assertions, and CI-ready evidence—without coupling verification to an application framework.</p>
         <div className="rettp-product-details"><span><b>Built for</b> release gates &amp; pre-production checks</span><span><b>Runs</b> standalone tests, core suites, and sequential pipelines</span></div>
       </div>
       <ul className="feature-list rettp-feature-list" aria-label="ReTTP key features">

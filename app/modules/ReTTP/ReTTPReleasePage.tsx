@@ -19,8 +19,8 @@ export function ReTTPReleasePage() {
           <div className="rettp-hero__actions"><a className="button button--primary" href="#download">Download ReTTP <DownloadIcon /></a><a className="button button--ghost" href={rettpRelease.repository} target="_blank" rel="noreferrer">View on GitHub ↗</a></div>
         </div>
         <div className="rettp-terminal" data-reveal>
-          <div className="rettp-terminal__bar"><span /><span /><span /><b>preprod.utest</b></div>
-          <pre><code><i>core</i> {'{'}{`\n  `}<i>test</i> <strong>"health check"</strong> {'{'}{`\n    `}<i>request</i> <b>GET</b> <strong>"/health"</strong>{`\n    `}<i>expect</i> {'{'} <em>status</em> = <b>200</b> {'}'}{`\n  }\n`} {'}'}{`\n\n`}<span>$ rettp run preprod.utest --base-url https://staging.example.com</span>{`\n`}<mark>✓ 1 suite passed · 0 failures · 234ms</mark></code></pre>
+          <div className="rettp-terminal__bar"><span /><span /><span /><b>preprod.rttp</b></div>
+          <pre><code><i>core</i> {'{'}{`\n  `}<i>test</i> <strong>"health check"</strong> {'{'}{`\n    `}<i>request</i> <b>GET</b> <strong>"/health"</strong>{`\n    `}<i>expect</i> {'{'} <em>status</em> = <b>200</b> {'}'}{`\n  }\n`} {'}'}{`\n\n`}<span>$ rettp run preprod.rttp --base-url https://staging.example.com</span>{`\n`}<mark>✓ 1 suite passed · 0 failures · 234ms</mark></code></pre>
         </div>
       </section>
       <section className="rettp-proof section-shell" data-reveal><div><span>01</span><strong>Validate first</strong><p>Check syntax and semantics before a request leaves your machine.</p></div><div><span>02</span><strong>Assert precisely</strong><p>Verify status, headers, text, empty bodies, and typed JSON.</p></div><div><span>03</span><strong>Gate safely</strong><p>Export redacted JSON and JUnit reports for CI release gates.</p></div></section>
