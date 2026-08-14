@@ -7,6 +7,10 @@ export type Project = {
   name: string;
   category: string;
   description: string;
+  metrics?: Array<{
+    value: string;
+    label: string;
+  }>;
   features: string[];
   stack: string[];
   repositories: Repository[];
@@ -38,7 +42,7 @@ export type Award = {
 export const profile = {
   name: "Adrian Nathanael Setiawan",
   eyebrow: "Software Engineer · Backend & Distributed Systems",
-  bio: "I’m Adrian, a Universitas Indonesia student and  software engineer focused on backend systems and distributed infrastructure. I enjoy turning complex workflows into dependable, maintainable software.",
+  bio: "I’m Adrian, a software engineer and computer science student at Universitas Indonesia. I build backend systems and distributed infrastructure, turning complex workflows into reliable, maintainable software.",
   portraitImage: undefined as string | undefined,
   cv: "https://docs.google.com/document/d/1XRCSButju5pjzLNOFQvr3--FpYzvyrPpDeFjMewoXNo/edit?usp=sharing",
   contact: {
@@ -155,10 +159,16 @@ export const projects: Project[] = [
     visual: "academic",
   },
   {
-    name: "DDP-0 Python Grader",
-    category: "Distributed online judge and automated grading system",
+    name: "DDP0 Grader",
+    category: "Official task for the DDP0 project",
     description:
-      "A distributed Python grading platform designed to process programming submissions asynchronously and execute each test case inside an isolated environment.",
+      "An automated Python-code grading system built in Go, using Docker sandboxing for secure execution, Redis for message queuing, and goroutines for distributed task processing.",
+    metrics: [
+      { value: "400+", label: "concurrent active users on 2 CPU / 4 GB" },
+      { value: "2,000+", label: "submissions processed" },
+      { value: "99%", label: "uptime during peak traffic" },
+      { value: "20s", label: "average peak grading time" },
+    ],
     features: [
       "Redis Streams-based grading job queue",
       "Distributed job consumption",

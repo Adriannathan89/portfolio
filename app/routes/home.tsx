@@ -3,12 +3,12 @@ import type { Route } from "./+types/home";
 import {
   AwardCard,
   ExperienceCard,
-  ExternalLink,
   Icon,
   ProjectCard,
   SectionHeading,
 } from "../components/portfolio";
 import { ScrollEffects } from "../components/scroll-effects";
+import { InkCursor } from "../components/ink-cursor";
 import { VisitTracker } from "../components/visit-tracker";
 import { ReTTPProjectCard } from "../modules/ReTTP/ReTTPProjectCard";
 import {
@@ -68,15 +68,24 @@ function ContactAnchor({ href, label, children }: { href: string; label: string;
 function HeroSection() {
   return (
     <section id="about" className="hero section-shell">
-      <div className="hero-copy">
+      <div className="hero-ink" aria-hidden="true">
+        <span className="hero-ink__drop hero-ink__drop--one" />
+        <span className="hero-ink__drop hero-ink__drop--two" />
+        <span className="hero-ink__drop hero-ink__drop--three" />
+      </div>
+      <div className="hero-heading">
         <p className="eyebrow hero-eyebrow"><span />{profile.eyebrow}</p>
         <h1>Adrian <em>Nathanael</em> <span>Setiawan</span></h1>
+      </div>
+      <div className="hero-copy">
+        <p className="hero-introduction-label">Introduction</p>
         <p className="hero-bio">{profile.bio}</p>
         <div className="hero-actions">
           <a className="button button--primary" href={profile.cv} target="_blank" rel="noreferrer noopener">Download CV <Icon name="download" /></a>
           <a className="button button--ghost" href="#contact">Contact Me</a>
         </div>
       </div>
+      <a className="hero-scroll-cue" href="#projects"><span>Explore selected work</span><Icon name="arrow" size={15} /></a>
     </section>
   );
 }
@@ -85,10 +94,16 @@ function ContactSection() {
   return (
     <section id="contact" className="contact-section section-shell">
       <div className="contact-gridline" aria-hidden="true" />
-      <h2>Let’s build something <em>meaningful.</em></h2>
-      <div className="contact-actions mt-6">
-        <ContactAnchor href={profile.contact.linkedin} label="LinkedIn"><Icon name="linkedin" size={19} /> <span>LinkedIn</span></ContactAnchor>
-        <ContactAnchor href={profile.contact.whatsapp} label="WhatsApp"><Icon name="message" size={19} /> <span>WhatsApp</span></ContactAnchor>
+      <div className="contact-heading">
+        <p className="eyebrow"><span /> GET IN TOUCH</p>
+        <h2>Let’s build something <em>meaningful.</em></h2>
+      </div>
+      <div className="contact-copy">
+        <p>Have a project, opportunity, or engineering challenge in mind? I’m always open to a thoughtful conversation.</p>
+        <div className="contact-actions">
+          <ContactAnchor href={profile.contact.linkedin} label="LinkedIn"><Icon name="linkedin" size={19} /> <span>LinkedIn</span></ContactAnchor>
+          <ContactAnchor href={profile.contact.whatsapp} label="WhatsApp"><Icon name="message" size={19} /> <span>WhatsApp</span></ContactAnchor>
+        </div>
       </div>
     </section>
   );
@@ -100,21 +115,22 @@ function Footer() {
 
 export default function Home() {
   return (
-    <main>
+    <main className="portfolio-page">
       <ScrollEffects />
+      <InkCursor />
       <VisitTracker />
       <Header />
       <HeroSection />
       <section id="projects" className="projects-section section-shell">
-        <SectionHeading eyebrow="SELECTED PROJECTS" title="Selected Projects"> </SectionHeading>
+        <SectionHeading eyebrow="SELECTED PROJECTS" title="Work built with purpose">A selection of backend systems, developer tools, and full-stack products designed around reliability, clarity, and real-world use.</SectionHeading>
         <div className="projects-grid">{projects.map((project, index) => <ProjectCard project={project} index={index} key={project.name} />)}<ReTTPProjectCard /></div>
       </section>
       <section id="experience" className="experience-section section-shell">
-        <SectionHeading eyebrow="IN THE FIELD" title="Organizations & Experience"> </SectionHeading>
+        <SectionHeading eyebrow="IN THE FIELD" title="Experience that shaped the work">Engineering experience across organizations, collaborative teams, and systems that need to remain dependable as they grow.</SectionHeading>
         <div className="experience-timeline">{experiences.map((experience, index) => <ExperienceCard experience={experience} index={index} key={experience.organization} />)}</div>
       </section>
       <section id="awards" className="awards-section section-shell">
-        <SectionHeading eyebrow="MILESTONES" title="Awards & Recognition"> </SectionHeading>
+        <SectionHeading eyebrow="MILESTONES" title="Recognition along the way">Selected milestones from national programming, informatics, and logic competitions.</SectionHeading>
         <div className="awards-grid">{awards.map((award, index) => <AwardCard award={award} key={`${award.title}-${index}`} />)}</div>
       </section>
       <ContactSection />

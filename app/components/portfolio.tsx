@@ -50,8 +50,10 @@ export function ExternalLink({ href, children, className = "" }: { href: string;
 export function SectionHeading({ eyebrow, title, children }: { eyebrow: string; title: string; children: ReactNode }) {
   return (
     <div className="section-heading">
-      <p className="eyebrow"><span /> {eyebrow}</p>
-      <h2>{title}</h2>
+      <div className="section-heading__title">
+        <p className="eyebrow"><span /> {eyebrow}</p>
+        <h2>{title}</h2>
+      </div>
       <p className="section-description">{children}</p>
     </div>
   );
@@ -76,6 +78,11 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         <h3>{project.name}</h3>
         <p>{project.description}</p>
       </div>
+      {project.metrics && (
+        <dl className="project-metrics" aria-label={`${project.name} operational metrics`}>
+          {project.metrics.map((metric) => <div key={metric.label}><dt>{metric.value}</dt><dd>{metric.label}</dd></div>)}
+        </dl>
+      )}
       <ul className="feature-list" aria-label={`${project.name} core features`}>
         {project.features.map((feature) => <li key={feature}>{feature}</li>)}
       </ul>

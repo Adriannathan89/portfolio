@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="metal" x1="17" y1="4" x2="17" y2="16" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f5f5f0" />
+      <stop offset=".36" stop-color="#a9aea9" />
+      <stop offset=".6" stop-color="#eef0ec" />
+      <stop offset="1" stop-color="#777d78" />
+    </linearGradient>
+    <linearGradient id="wood" x1="28" y1="5" x2="28" y2="15" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#594035" />
+      <stop offset=".48" stop-color="#2e211d" />
+      <stop offset="1" stop-color="#171211" />
+    </linearGradient>
+  </defs>
+  <!-- Horizontal source brush rotated around its exact bristle tip (1, 10).
+       Translation maps that hotspot to cursor coordinate (3, 59). -->
+  <g transform="translate(2 49) rotate(-45 1 10)">
+    <path d="M1 10c3.4-4.1 8.6-5.2 14.8-3.2L19 10l-3.2 3.2C9.6 15.2 4.4 14.1 1 10Z" fill="#181411" stroke="#090807" stroke-width=".9" />
+    <path d="M3 9.2c4-2.5 8.5-2.9 12.7-1.6" stroke="#6f5142" stroke-width=".8" stroke-linecap="round" opacity=".8" />
+    <path d="M15.8 6.7h12.4v6.6H15.8z" fill="url(#metal)" stroke="#686e69" stroke-width=".8" />
+    <path d="M18.8 7v6M25.5 7v6" stroke="#7c827d" stroke-width=".55" opacity=".8" />
+    <path d="M28 6.1c10.8-.45 21.9-.45 30.8 1.15 2.9.52 2.9 4.98 0 5.5-8.9 1.6-20 1.6-30.8 1.15V6.1Z" fill="url(#wood)" stroke="#171311" stroke-width=".9" />
+    <path d="M30 7.3c9.8-.25 18.7-.05 27.8 1" stroke="#8c6c5d" stroke-width=".65" stroke-linecap="round" opacity=".48" />
+  </g>
+</svg>

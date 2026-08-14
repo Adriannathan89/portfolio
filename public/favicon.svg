@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <clipPath id="logo-shape">
+      <rect x="5" y="5" width="54" height="54" rx="10" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#logo-shape)">
+    <rect x="5" y="5" width="27" height="27" fill="#171b18" />
+    <rect x="32" y="5" width="27" height="27" fill="#ffffff" />
+    <rect x="5" y="32" width="27" height="27" fill="#ffffff" />
+    <rect x="32" y="32" width="27" height="27" fill="#171b18" />
+  </g>
+  <rect x="5" y="5" width="54" height="54" rx="10" fill="none" stroke="#171b18" stroke-width="3" />
+</svg>
