@@ -6,6 +6,8 @@ type InkPoint = {
   radius: number;
   bornAt: number;
   duration: number;
+  kind: "drop" | "splash";
+  fallDistance: number;
 };
 
 export function InkCursor() {
@@ -23,8 +25,12 @@ export function InkCursor() {
     const root = document.documentElement;
     const points: InkPoint[] = [];
     let animationFrame = 0;
-    let lastX: number | null = null;
-    let lastY: number | null = null;
+    let pointerX = 0;
+    let pointerY = 0;
+    let pointerVisible = false;
+    let pointerAllowsInk = false;
+    let lastMovementAt = 0;
+    let lastDropAt = 0;
 
     const resizeCanvas = () => {
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
@@ -35,8 +41,15 @@ export function InkCursor() {
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     };
 
-    const addPoint = (x: number, y: number, radius = 1.8, duration = 760) => {
-      points.push({ x, y, radius, bornAt: performance.now(), duration });
+    const addPoint = (
+      x: number,
+      y: number,
+      radius = 1.8,
+      duration = 760,
+      kind: InkPoint["kind"] = "splash",
+      fallDistance = 0,
+    ) => {
+      points.push({ x, y, radius, bornAt: performance.now(), duration, kind, fallDistance });
       if (points.length > 680) points.splice(0, points.length - 680);
     };
 
@@ -45,27 +58,13 @@ export function InkCursor() {
 
     const handlePointerMove = (event: PointerEvent) => {
       if (event.pointerType === "touch") return;
-
-      if (isInkFreeTarget(event.target)) {
-        // Existing ink keeps fading naturally, but no stroke bridges across this area.
-        lastX = null;
-        lastY = null;
-        return;
-      }
-
-      if (lastX !== null && lastY !== null) {
-        const distance = Math.hypot(event.clientX - lastX, event.clientY - lastY);
-        const steps = Math.max(1, Math.ceil(distance / 3));
-        for (let step = 1; step <= steps; step += 1) {
-          const progress = step / steps;
-          const x = lastX + (event.clientX - lastX) * progress;
-          const y = lastY + (event.clientY - lastY) * progress;
-          addPoint(x, y, 1.8 + Math.random() * 1.4, 780 + Math.random() * 320);
-        }
-      }
-
-      lastX = event.clientX;
-      lastY = event.clientY;
+      const now = performance.now();
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      pointerVisible = true;
+      pointerAllowsInk = !isInkFreeTarget(event.target);
+      lastMovementAt = now;
+      lastDropAt = now;
     };
 
     const handlePointerDown = (event: PointerEvent) => {
@@ -84,13 +83,23 @@ export function InkCursor() {
     };
 
     const hideBrush = () => {
-      lastX = null;
-      lastY = null;
+      pointerVisible = false;
+      pointerAllowsInk = false;
     };
 
     const draw = (time: number) => {
       context.clearRect(0, 0, window.innerWidth, window.innerHeight);
       context.fillStyle = "#111512";
+
+      if (
+        pointerVisible &&
+        pointerAllowsInk &&
+        time - lastMovementAt >= 600 &&
+        time - lastDropAt >= 1500
+      ) {
+        addPoint(pointerX, pointerY, 2.7 + Math.random() * .8, 1050, "drop", 28 + Math.random() * 12);
+        lastDropAt = time;
+      }
 
       for (let index = points.length - 1; index >= 0; index -= 1) {
         const point = points[index];
@@ -99,10 +108,23 @@ export function InkCursor() {
           points.splice(index, 1);
           continue;
         }
-
-        context.globalAlpha = Math.pow(1 - progress, 1.55) * .44;
+        const easedProgress = 1 - Math.pow(1 - progress, 2);
+        const y = point.y + point.fallDistance * easedProgress;
+        context.globalAlpha = Math.pow(1 - progress, point.kind === "drop" ? 1.1 : 1.55) * .52;
         context.beginPath();
-        context.arc(point.x, point.y, point.radius * (1 + progress * .35), 0, Math.PI * 2);
+        if (point.kind === "drop") {
+          context.ellipse(
+            point.x,
+            y,
+            point.radius * (1 + progress * .2),
+            point.radius * (1.45 - progress * .25),
+            0,
+            0,
+            Math.PI * 2,
+          );
+        } else {
+          context.arc(point.x, y, point.radius * (1 + progress * .35), 0, Math.PI * 2);
+        }
         context.fill();
       }
 
